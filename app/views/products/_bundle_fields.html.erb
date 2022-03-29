@@ -1,0 +1,25 @@
+<%= content_tag :div, class: "nested-fields", data: { new_record: form.object.new_record? } do %>
+
+  <div class="py-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6" >
+      
+      <div class="sm:col-span-3">
+        <%= form.label "Product Variant", class: "block text-sm font-medium text-gray-700" %>
+        <div class="mt-1">
+          <%= form.select(:bundled_product_id, Variant.includes([:product]).collect {|v| [ "#{v.product.name} - #{v.name}", v.id ] }, {}, { include_blank: true, class: "input" }) %>
+        </div>
+      </div>
+
+      <div class="sm:col-span-3">
+        <%= form.label "Quantity", class: "block text-sm font-medium text-gray-700" %>
+        <div class="mt-1">
+        <%= form.text_field :quantity, class: "form-control" %>
+        </div>
+      </div>
+
+      <%= form.hidden_field :_destroy %>
+
+      <small><%= link_to "Remove", "#", class: "text-red-500", data: { action: "click->nested-bundle#remove_association" } %></small>
+
+  </div>
+
+<% end %>

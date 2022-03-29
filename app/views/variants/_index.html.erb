@@ -1,0 +1,6 @@
+<div id="<%= dom_id(variant, :index) %>">
+  <%= turbo_stream_from variant %>
+  <%= render variant %>
+  <%= link_to "View", variant, class: "btn btn-white" %>
+</div>
+

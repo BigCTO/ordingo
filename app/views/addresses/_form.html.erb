@@ -1,0 +1,53 @@
+<%= form_with(model: address) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
+
+  <div class="form-group">
+    <%= form.label :customer_id %>
+    <%= form.text_field :customer_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :street %>
+    <%= form.text_field :street, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :number %>
+    <%= form.text_field :number, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :city %>
+    <%= form.text_field :city, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :state %>
+    <%= form.text_field :state, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :zipcode %>
+    <%= form.text_field :zipcode, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :country %>
+    <%= form.text_field :country, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :primary %>
+    <%= form.check_box :primary, class: "form-checkbox" %>
+  </div>
+
+  <div>
+    <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-primary" %>
+
+    <% if form.object.new_record? %>
+      <%= link_to t("cancel"), addresses_path, class: "btn btn-white" %>
+    <% else %>
+      <%= link_to t("cancel"), address_path(@address), class: "btn btn-white" %>
+    <% end %>
+  </div>
+<% end %>

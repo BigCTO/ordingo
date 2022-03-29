@@ -1,8 +1,129 @@
-<div class="container mx-auto p-4">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
   <div class="my-8">
     <h1><%= t(".title") %></h1>
 
-    <p class="mb-2">This is the homepage for logged in users.</p>
-    <p>You can customize this page in <code>app/views/dashboard/show.html.erb</code></p>
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div>
+      <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="relative bg-white pt-5 px-4 pb-12 sm:pt-6 sm:px-6 shadow rounded-lg overflow-hidden">
+          <dt>
+            <div class="absolute bg-black rounded-md p-3">
+              <!-- Heroicon name: outline/users -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            </div>
+            <p class="ml-16 text-sm font-medium text-gray-500 truncate">Orders</p>
+          </dt>
+          <dd class="ml-16 pb-6 flex items-baseline sm:pb-7">
+            <p class="text-2xl font-semibold text-gray-900"><%= @orders.count %></p>
+            <p class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
+              <!-- Heroicon name: solid/arrow-sm-up -->
+              <svg class="self-center flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span class="sr-only"> Increased by </span>
+              100%
+            </p>
+          </dd>
+        </div>
+
+        <div class="relative bg-white pt-5 px-4 pb-12 sm:pt-6 sm:px-6 shadow rounded-lg overflow-hidden">
+          <dt>
+            <div class="absolute bg-black rounded-md p-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            </div>
+            <p class="ml-16 text-sm font-medium text-gray-500 truncate">Revenue</p>
+          </dt>
+          <dd class="ml-16 pb-6 flex items-baseline sm:pb-7">
+            <p class="text-2xl font-semibold text-gray-900">$19,010</p>
+            <p class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
+              <!-- Heroicon name: solid/arrow-sm-up -->
+              <svg class="self-center flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span class="sr-only"> Increased by </span>
+              5.4%
+            </p>
+          </dd>
+        </div>
+
+        <div class="relative bg-white pt-5 px-4 pb-12 sm:pt-6 sm:px-6 shadow rounded-lg overflow-hidden">
+          <dt>
+            <div class="absolute bg-black rounded-md p-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+            </div>
+            <p class="ml-16 text-sm font-medium text-gray-500 truncate">AOV</p>
+          </dt>
+          <dd class="ml-16 pb-6 flex items-baseline sm:pb-7">
+            <p class="text-2xl font-semibold text-gray-900">$327.76</p>
+            <p class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
+              <!-- Heroicon name: solid/arrow-sm-up -->
+              <svg class="self-center flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span class="sr-only"> Increased by </span>
+              5.4%
+            </p>
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+ 
+    <%= turbo_stream_from :orders %>
+
+    <div class="container mx-auto">
+      <div class="flex items-center justify-between mt-10 mb-6">
+        <div>
+            <h1 class="text-xl font-semibold text-gray-900">Orders</h1>
+        </div>
+  
+      </div>
+      <div class="flex flex-col">
+        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">#</th>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Customer</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Amount</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Products</th>
+                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                      <span class="sr-only">Edit</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  <%= tag.div id: ("orders" if first_page?), class: "bg-white rounded-md shadow space-y-8" do %>
+                    <%= render partial: "orders/index", collection: @orders, as: :order, cached: true %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <% if @pagy.pages > 1 %>
+          <div class="my-6 text-center">
+            <%= pagy_nav(@pagy) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+
+
+
+
+
   </div>
 </div>

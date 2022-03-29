@@ -1,0 +1,44 @@
+# == Schema Information
+#
+# Table name: addresses
+#
+#  id          :bigint           not null, primary key
+#  city        :string
+#  country     :string
+#  number      :string
+#  primary     :boolean          default(FALSE), not null
+#  state       :string
+#  street      :string
+#  zipcode     :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  customer_id :bigint           not null
+#
+# Indexes
+#
+#  index_addresses_on_customer_id  (customer_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (customer_id => customers.id)
+#
+
+one:
+  customer: one
+  street: MyString
+  number: MyString
+  city: MyString
+  state: MyString
+  zipcode: MyString
+  country: MyString
+  primary: false
+
+two:
+  customer: two
+  street: MyString
+  number: MyString
+  city: MyString
+  state: MyString
+  zipcode: MyString
+  country: MyString
+  primary: false

@@ -1,0 +1,18 @@
+--- !ruby/object:Jumpstart::Configuration
+application_name: Ordingo
+business_name: Shycat, LLC
+domain: example.com
+support_email: team@ordingo.com
+default_from_email: Jumpstart <support@example.com>
+business_address: |-
+  986 N 1750 W
+  Provo, UT
+  84604
+background_job_processor: async
+email_provider: ''
+personal_accounts: true
+livereload: false
+solargraph: false
+register_with_account: true
+apns: false
+fcm: false
