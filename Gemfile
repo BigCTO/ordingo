@@ -43,6 +43,7 @@ gem "image_processing", "~> 1.12"
 gem "nokogiri", ">= 1.12.5"
 
 gem 'friendly_id', '~> 5.4.0'
+gem "aws-sdk-s3", require: false
 
 group :development, :test do
   # Start debugger with binding.b [https://github.com/ruby/debug]
