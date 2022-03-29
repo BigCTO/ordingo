@@ -1,0 +1,65 @@
+<div>
+  <div class="flex items-center px-4 py-4 sm:px-6">
+    <div class="min-w-0 flex-1 flex items-center ">
+      <div class="flex-shrink-0">
+        <%= image_tag(variant.product.image.variant(resize_to_limit: [150, 150]), class: "h-12 w-12 rounded-full", alt: variant.product.name) %>
+      </div>
+      <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-5 md:gap-4 items-center">
+        <div>
+          <p class="text-sm font-medium text-indigo-600 truncate"><%= variant.name %></p>
+        </div>
+
+        <div>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-teal-100 text-teal-800">
+            <p class="text-xs uppercase font-medium text-teal-600 truncate"><small>variant</small></p>
+          </span>
+        </div>
+
+        <div class="hidden md:flex flex-row items-center justify-end">
+          <p class="text-l text-gray-900 mr-4 flex flex-row items-center">
+            <%= number_to_currency(variant.price_per_lb) %> <span class="ml-1 uppercase font-bold text-xs text-gray-500">per lb</span>
+          </p>
+        </div>
+
+        <div class="flex flex-row items-center justify-end">
+          <p id="productPrice" class="text-l text-gray-900 mr-2">
+            <%= variant.weight %> <small class="ml-1">oz</small>
+          </p> 
+        </div>
+
+        <div class="flex flex-row items-center justify-end">
+          <p id="productPrice" class="text-l text-gray-000 mr-2">
+            <%= variant.inventory %>
+          </p> 
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <% variant.bundles.each do |b| %>
+    <% v = Variant.find(b.variant_id) %>
+    <div class="grid grid-columns-1 divide-y divide-gray-200 px-4 py-4 sm:px-6 bg-gray-100">
+      <div class="flex items-center ">
+        <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4 items-center">
+          <div  class="flex items-center ">
+            <div class="mr-2">
+              <p class="text-sm font-medium text-gray-600 truncate"><%= b.bundled_product.name %></p>
+            </div>
+            <div>
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-teal-100 text-teal-800">
+                <p class="text-xs uppercase font-medium text-teal-600 truncate"><small>bundle item</small></p>
+              </span>
+            </div>
+          </div>
+          <div class="flex flex-row items-center justify-end">
+            <p id="productPrice" class="text-l text-gray-000 mr-2">
+              Q: <%= b.quantity %>
+            </p> 
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+</div>

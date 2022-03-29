@@ -34,7 +34,7 @@ module.exports = {
         "code-600": "#3c455b",
       },
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        sans: ['JetBrains Mono', ...defaultTheme.fontFamily.sans],
       },
     },
   },

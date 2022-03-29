@@ -1,0 +1,21 @@
+<%= content_tag :div, class: "order-items", data: { new_record: form.object.new_record? } do %>
+  <div class="py-6 grid grid-cols-6 gap-6">
+
+    <div class="sm:col-span-3">
+      <%= form.label "Product Variant", class: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" %>
+      <div class="mt-1">
+        <%= form.select(:variant_id, Variant.includes([:product]).collect {|v| [ "#{v.product.name} - #{v.name}", v.id ] }, {}, { include_blank: true, class: "input"}) %>
+      </div>
+    </div>
+    <div class="col-span-6 sm:col-span-3">
+      <%= form.label :quantity, class: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" %>
+      <%= form.number_field :quantity, value: 1, disabled: true, class: "input", placeholder: "Quantity" %>
+    </div>
+
+    <div class="sm:col-span-6 col-span-6">
+      <small><%= link_to "Remove", "#", class: "text-red-500", data: { action: "click->order-items#remove_association" } %></small>
+    </div>
+
+
+  </div>
+<% end %>

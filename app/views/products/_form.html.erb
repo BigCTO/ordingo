@@ -1,0 +1,99 @@
+<%= form_with(model: product) do |form| %>
+  <%= render "shared/error_messages", resource: form.object %>
+
+    <%= form.hidden_field :account_id, class: "form-control" %>
+
+  <div class="form-group">
+    <% if product.image.attached? %>
+      <%= image_tag product.image, class: "w-36 h-auto" %>
+      <%= form.label :image, class: "relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500" do %>
+        <span>Upload a file</span>
+        <%= form.file_field :image, direct_upload: true, class: "sr-only" %>
+      <% end %>
+    <% else %>
+      <div class="sm:col-span-6">
+        <label for="cover_photo" class="block text-sm font-medium text-gray-700">
+          Cover photo
+        </label>
+        <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+          <div class="space-y-1 text-center">
+            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <div class="flex text-sm text-gray-600 justify-center">
+              <%= form.label :image, class: "relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500" do %>
+                <span>Upload a file</span>
+                <%= form.file_field :image, direct_upload: true, class: "sr-only" %>
+              <% end %>
+            </div>
+            <p class="text-xs text-gray-500">
+              PNG, JPG, GIF up to 10MB
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :status, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.select(:status, ["draft","active","archive"], { include_blank: true }, class: "input") %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :type_of, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.select(:type_of, ["single","bundle"], { include_blank: true }, class: "input") %>
+    </div>
+  </div>
+
+    <div class="mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Variants</h3>
+        <p class="mt-1 text-sm text-gray-500">
+          Add your product variants
+        </p>
+      </div>
+      <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="my-8 divide-y divide-gray-200" data-controller="nested-variant"> 
+
+          <template data-nested-variant-target="template">
+            <%= form.fields_for :variants, Variant.new, child_index: 'NEW_RECORD' do |variant| %>
+              <%= render "variant_fields", form: variant %>
+            <% end %>
+          </template>
+
+          
+          <%= form.fields_for :variants do |variant| %>
+            <%= render "variant_fields", form: variant %>
+          <% end %>
+          
+          <div class="py-4 flex justify-end" data-nested-variant-target="links">
+            <%= link_to "Add Variant", "#", class: "ml-3 inline-flex justify-center text-sm font-medium rounded-md text-indigo-600 hover:text-indigo-700 focus:outline-none", data: { action: "click->nested-variant#add_association" } %>
+          </div>
+
+        </div> 
+      </div>
+    </div>
+  </div>
+
+
+
+  <div>
+    <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-primary" %>
+
+    <% if form.object.new_record? %>
+      <%= link_to t("cancel"), products_path, class: "btn btn-white" %>
+    <% else %>
+      <%= link_to t("cancel"), product_path(@product), class: "btn btn-white" %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,7 @@
+ <%= form.fields_for :bundles, product.bundles.new do |f| %>  
+  <div class="mb-4">
+    <%= f.label :bundled_product_id, class: "block text-gray-700 text-sm font-bold mb-2"  %>
+    <%= f.text_field :bundled_product_id, class: "input" %>
+  </div>
+<% end %>
+
