@@ -30,6 +30,7 @@
 
 @import "tippy.js/dist/tippy.css";
 @import "flatpickr/dist/flatpickr.css";
+@import "administrate/library/slim-select.scss";
 
 
 @font-face {
@@ -72,4 +73,17 @@
   font-family: 'JetBrains Mono';
   src: url('JetBrainsMono-ExtraBold.ttf');
   font-weight: 900;
+}
+.custom-switch > [type='checkbox']:checked{
+    background-color: transparent !important;
+}
+
+.toggle-checkbox:checked {
+    @apply: right-0 border-green-400;
+    right: 0;
+    border-color: #68D391;
+}
+.toggle-checkbox:checked + .toggle-label {
+    @apply: bg-green-400;
+    background-color: #68D391;
 }

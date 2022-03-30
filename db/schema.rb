@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_29_022345) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_30_072849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -396,6 +396,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_29_022345) do
     t.index ["slug"], name: "index_variants_on_slug", unique: true
   end
 
+  create_table "webhook_endpoints", force: :cascade do |t|
+    t.string "target_url", null: false
+    t.string "event_types", default: [], null: false, array: true
+    t.boolean "enabled", default: true
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_webhook_endpoints_on_account_id"
+  end
+
+  create_table "webhook_events", force: :cascade do |t|
+    t.integer "webhook_endpoint_id", null: false
+    t.jsonb "payload", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["webhook_endpoint_id"], name: "index_webhook_events_on_webhook_endpoint_id"
+  end
+
   add_foreign_key "account_invitations", "accounts"
   add_foreign_key "account_invitations", "users", column: "invited_by_id"
   add_foreign_key "account_users", "accounts"
@@ -413,4 +431,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_29_022345) do
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
   add_foreign_key "user_connected_accounts", "users"
   add_foreign_key "variants", "products"
+  add_foreign_key "webhook_endpoints", "accounts"
 end
