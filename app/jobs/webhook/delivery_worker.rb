@@ -7,14 +7,18 @@ module Webhook
     def perform(webhook_endpoint_id, payload)
       webhook_endpoint = WebhookEndpoint.find(webhook_endpoint_id)
       return unless webhook_endpoint.present?
-      WebhookEvent.create!(webhook_endpoint: webhook_endpoint, payload:JSON.parse(payload))
+      webhook_event = WebhookEvent.create!(webhook_endpoint: webhook_endpoint, payload:JSON.parse(payload))
       response = request(webhook_endpoint.target_url, payload)
       case response.code
       when 400..599
+        webhook_event.update(response: response.to_s)
         raise response.to_s
       else
         true
       end
+      webhook_event.update(delivered: true)
+    rescue => error
+      webhook_event.update(response: error.message)
     end
 
     private

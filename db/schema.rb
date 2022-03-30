@@ -411,6 +411,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_30_072849) do
     t.jsonb "payload", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "delivered", default: false
+    t.text "response"
     t.index ["webhook_endpoint_id"], name: "index_webhook_events_on_webhook_endpoint_id"
   end
 

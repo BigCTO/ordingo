@@ -3,7 +3,9 @@
 # Table name: webhook_events
 #
 #  id                  :bigint           not null, primary key
+#  delivered           :boolean          default(FALSE)
 #  payload             :jsonb            not null
+#  response            :text
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  webhook_endpoint_id :integer          not null
