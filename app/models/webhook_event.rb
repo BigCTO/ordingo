@@ -12,10 +12,13 @@
 #
 #  index_webhook_events_on_webhook_endpoint_id  (webhook_endpoint_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (webhook_endpoint_id => webhook_endpoints.id) ON DELETE => cascade
+#
 class WebhookEvent < ApplicationRecord
   belongs_to :webhook_endpoint, inverse_of: :webhook_events
 
-  attribute :payload, :string, array: true, default: []
   validates :webhook_endpoint_id, presence: true
   validates :payload, presence: true
 

@@ -23,4 +23,9 @@ class WebhookEndpoint < ApplicationRecord
 
   validates :target_url, presence: true, format: URI.regexp(%w(http https))
   validates :event_types, presence: true
+
+  def deliver(event)
+    Webhook::DeliveryWorker.perform_later(id, event.to_json)
+  end
+
 end

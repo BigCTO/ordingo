@@ -432,4 +432,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_30_072849) do
   add_foreign_key "user_connected_accounts", "users"
   add_foreign_key "variants", "products"
   add_foreign_key "webhook_endpoints", "accounts"
+  add_foreign_key "webhook_events", "webhook_endpoints", on_delete: :cascade
 end

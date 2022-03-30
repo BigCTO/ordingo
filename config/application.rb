@@ -36,5 +36,7 @@ module JumpstartApp
     # Prevent sassc-rails from setting sass as the compressor
     # Libsass is deprecated and doesn't support modern CSS syntax used by TailwindCSS
     config.assets.css_compressor = nil
+
+    config.active_job.queue_adapter = ActiveJob::QueueAdapters::AsyncAdapter.new min_threads: 1, max_threads: 2 * Concurrent.processor_count, idletime: 600.seconds
   end
 end

@@ -5,5 +5,6 @@ class CreateWebhookEvents < ActiveRecord::Migration[7.0]
       t.jsonb :payload, null: false
       t.timestamps
     end
+    add_foreign_key :webhook_events, :webhook_endpoints, on_delete: :cascade, validate: false
   end
 end

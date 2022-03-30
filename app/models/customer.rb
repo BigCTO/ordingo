@@ -12,6 +12,7 @@
 #  account_id :integer
 #
 class Customer < ApplicationRecord
+  include Webhook::Observable
   acts_as_tenant :account
   # Broadcast changes in realtime with Hotwire
   after_create_commit  -> { broadcast_prepend_later_to :customers, partial: "customers/index", locals: { customer: self } }
@@ -26,5 +27,9 @@ class Customer < ApplicationRecord
 
   def name
     "#{self.first_name} #{self.last_name}"
+  end
+
+  def webhook_payload
+    { customer: self }
   end
 end
