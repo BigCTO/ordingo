@@ -30,6 +30,7 @@
 #  fk_rails_...  (customer_id => customers.id)
 #
 class Order < ApplicationRecord
+  include Webhook::Observable
   acts_as_tenant :account
   extend FriendlyId
   friendly_id :slug_candidates, use: :scoped, scope: :account

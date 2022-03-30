@@ -1,0 +1,59 @@
+<div id="<%= dom_id webhook_endpoint %>">
+  <div class="bg-white rounded shadow webhook-endpoint-row">
+    <div class="target-url"><%= webhook_endpoint.target_url %></div>
+    <div class="flex">
+      <div class="event flex-1">
+        <p>Events</p>
+        <div class="ss-main">
+          <div class="ss-multi-selected">
+            <div class="ss-values">
+              <% webhook_endpoint.event_types.each do |event_type| %>
+                <div class="ss-value"><%= event_type %></div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="enabled flex-1">
+        <div>
+          <div class="custom-switch relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+            <input data-action="change->webhook-endpoint#handleChange" <%=webhook_endpoint.enabled == true ? 'checked': '' %> type="checkbox" name="toggle-<%=webhook_endpoint.id %>" id="toggle-<%=webhook_endpoint.id %>" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+            <label for="toggle-<%=webhook_endpoint.id %>" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+          </div>
+          <label class="form-check-label inline-block text-gray-800" for="toggle-<%=webhook_endpoint.id %>">Enabled</label>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <%= link_to t("edit"), edit_webhook_endpoint_path(webhook_endpoint), class: "btn-sm btn-link" %>
+      <%= link_to t("delete"), webhook_endpoint, class: "btn-sm btn-link", method: :delete, data: { confirm: "All related webhook events will be deleted, Are you sure ?" } %>
+    </div>
+  </div>
+</div>
+
+<style>
+    .target-url{
+        padding-top: 10px;
+        color: gray;
+    }
+    .event{
+        margin: 20px 0;
+    }
+    .ss-multi-selected{
+        border: none !important;
+        padding: 0 !important;
+        background-color:transparent !important;
+    }
+
+    .webhook-endpoint-row{
+        padding: 10px;
+    }
+
+    .ss-value{
+        background-color: gray !important;
+    }
+    .enabled > div{
+        float: right;
+    }
+
+</style>

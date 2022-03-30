@@ -17,6 +17,7 @@
 #  index_products_on_slug  (slug) UNIQUE
 #
 class Product < ApplicationRecord
+  include Webhook::Observable
   acts_as_tenant :account
   extend FriendlyId
   friendly_id :get_uuid, use: :scoped, scope: :account
