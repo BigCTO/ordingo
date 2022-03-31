@@ -50,7 +50,14 @@ class Order < ApplicationRecord
   after_destroy_commit -> { broadcast_remove_to :orders, target: dom_id(self, :index) }
 
   accepts_nested_attributes_for :line_items, allow_destroy: true
-  STATUS = %w[pending open ready out_for_delivery completed cancelled].freeze
+  STATUS = {
+    "pending"=>"pending",
+    "open"=>"open",
+    "ready"=>"ready",
+    "out_for_delivery"=>"out_for_delivery",
+    "completed"=>"completed",
+    "cancelled"=>"cancelled"
+  }.freeze
   enum fulfillment_status: STATUS, _suffix: true
   enum transaction_status: STATUS, _suffix: true
   enum delivery_method: STATUS, _suffix: true
@@ -74,12 +81,12 @@ class Order < ApplicationRecord
   end
 
   def transaction_status_event
-    if [4, 5].include?(transaction_status)
-      deliver_webhook(
-        "transaction_status.#{STATUS[transaction_status.to_s.to_sym]}",
-        { order: { id: id} }
-      )
-    end
+    return unless %w[completed cancelled].include?(transaction_status)
+
+    deliver_webhook(
+      "transaction_status.#{transaction_status}",
+      { order: { id: } }
+    )
   end
 
   def webhook_payload
