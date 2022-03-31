@@ -3,13 +3,13 @@
 # Table name: orders
 #
 #  id                 :bigint           not null, primary key
-#  delivery_method    :integer          default(0)
+#  delivery_method    :string           default(NULL)
 #  discount_price     :decimal(8, 2)
-#  fulfillment_status :integer          default(0)
+#  fulfillment_status :string           default(NULL)
 #  slug               :string
 #  subtotal_price     :decimal(8, 2)
 #  total_price        :decimal(8, 2)
-#  transaction_status :integer          default(0)
+#  transaction_status :string           default(NULL)
 #  uuid               :string
 #  weight             :decimal(, )
 #  created_at         :datetime         not null
