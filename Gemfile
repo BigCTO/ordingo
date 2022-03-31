@@ -13,7 +13,7 @@ gem "sprockets-rails", ">= 3.4.1"
 gem "pg"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "puma", "~> 5.6"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails", "~> 1.0", ">= 1.0.1"
@@ -56,6 +56,7 @@ group :development, :test do
   gem "annotate", github: "excid3/annotate_models", branch: "rails7"
   gem "letter_opener_web", "~> 2.0"
   gem "standard", require: false
+  gem 'rspec-rails', ">= 3.9.0"
 
   # Security tooling to
   # gem "brakeman"
