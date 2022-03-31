@@ -24,6 +24,18 @@ class WebhookEvent < ApplicationRecord
   validates :webhook_endpoint_id, presence: true
   validates :payload, presence: true
 
-  EVENT_TYPES = %w[customer.created customer.updated order.created order.updated product.created product.updated].freeze
+  EVENT_TYPES = %w[
+    customer.created
+    customer.updated
+    customer.deleted
+    order.created
+    order.updated
+    order.deleted
+    order.transaction_status.completed
+    order.transaction_status.cancelled
+    product.created
+    product.updated
+    product.deleted
+  ].freeze
 
 end

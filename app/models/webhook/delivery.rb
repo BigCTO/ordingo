@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Webhook
   module Delivery
@@ -7,9 +8,9 @@ module Webhook
       {}
     end
 
-    def deliver_webhook(action)
+    def deliver_webhook(action, payload = nil)
       event_name = "#{self.class.name.underscore}.#{action}"
-      deliver_webhook_event(event_name, webhook_payload)
+      deliver_webhook_event(event_name, payload || webhook_payload)
     end
 
     def deliver_webhook_event(event_name, payload)

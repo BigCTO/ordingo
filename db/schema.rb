@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_30_072849) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_31_093033) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -212,9 +212,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_30_072849) do
     t.decimal "subtotal_price", precision: 8, scale: 2
     t.decimal "discount_price", precision: 8, scale: 2
     t.decimal "weight"
-    t.integer "transaction_status", default: 0
-    t.integer "delivery_method", default: 0
-    t.integer "fulfillment_status", default: 0
+    t.string "transaction_status", default: "pending"
+    t.string "delivery_method", default: "pending"
+    t.string "fulfillment_status", default: "pending"
     t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
