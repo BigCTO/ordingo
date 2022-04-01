@@ -40,6 +40,9 @@ class Variant < ApplicationRecord
   has_many :bundles, dependent: :destroy
   has_many :bundled_products, through: :bundles
 
+  has_many :line_items
+  has_many :orders, through: :line_items
+
   accepts_nested_attributes_for :bundles, reject_if: :all_blank, allow_destroy: true
 
   def get_uuid

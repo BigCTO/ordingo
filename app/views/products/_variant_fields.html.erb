@@ -42,7 +42,7 @@
       <div class="sm:col-span-6">
         <%= form.label :price, class: "block text-sm font-medium text-gray-700" %>
         <div class="mt-1">
-          <%= form.number_field :price, class: "form-control" %>
+          <%= form.number_field :price, class: "form-control", step: "0.01" %>
         </div>
       </div>
 
