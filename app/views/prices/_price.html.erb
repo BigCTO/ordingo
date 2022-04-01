@@ -1,0 +1,26 @@
+<div id="<%= dom_id price %>">
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Order</p>
+    <%= price.order_id %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Total</p>
+    <%= price.total %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Subtotal</p>
+    <%= price.subtotal %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Discount amount</p>
+    <%= price.discount_amount %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Tax amount</p>
+    <%= price.tax_amount %>
+  </div>
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-500">Shipping fee</p>
+    <%= price.shipping_fee %>
+  </div>
+</div>

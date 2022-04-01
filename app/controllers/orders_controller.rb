@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  
+
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -84,7 +84,7 @@ class OrdersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def order_params
-    params.require(:order).permit(:account_id, :customer_id, :address_id, :transaction_status, :delivery_method, :fulfillment_status,line_items_attributes: [:id, :account_id, :order_id, :product_id, :variant_id, :product_name, :variant_name, :quantity, :weight, :total_price, :subtotal_price, :discount_price, :_destroy])
+    params.require(:order).permit(:account_id, :customer_id, :address_id, :transaction_status, :delivery_method, :fulfillment_status,line_items_attributes: [:id, :account_id, :order_id, :variant_id, :quantity, :_destroy])
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:order).permit(policy(@order).permitted_attributes)

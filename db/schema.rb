@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_31_093033) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_01_153356) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -164,20 +164,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_31_093033) do
   end
 
   create_table "line_items", force: :cascade do |t|
-    t.integer "account_id"
     t.bigint "order_id", null: false
-    t.integer "product_id"
-    t.integer "variant_id"
-    t.string "product_name"
-    t.string "variant_name"
-    t.decimal "weight"
-    t.decimal "total_price", precision: 8, scale: 2
-    t.decimal "subtotal_price", precision: 8, scale: 2
-    t.decimal "discount_price", precision: 8, scale: 2
+    t.bigint "variant_id", null: false
     t.integer "quantity", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_line_items_on_order_id"
+    t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end
 
   create_table "notification_tokens", force: :cascade do |t|
@@ -206,8 +199,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_31_093033) do
   create_table "orders", force: :cascade do |t|
     t.integer "account_id"
     t.string "uuid"
-    t.bigint "customer_id", null: false
-    t.bigint "address_id", null: false
+    t.bigint "customer_id"
+    t.bigint "address_id"
     t.decimal "total_price", precision: 8, scale: 2
     t.decimal "subtotal_price", precision: 8, scale: 2
     t.decimal "discount_price", precision: 8, scale: 2
@@ -312,6 +305,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_31_093033) do
     t.string "currency"
     t.integer "interval_count", default: 1
     t.string "description"
+  end
+
+  create_table "prices", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.decimal "total", precision: 8, scale: 2
+    t.decimal "subtotal", precision: 8, scale: 2
+    t.decimal "discount_amount", precision: 8, scale: 2
+    t.decimal "tax_amount", precision: 8, scale: 2
+    t.decimal "shipping_fee", precision: 8, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_prices_on_order_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -426,11 +431,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_31_093033) do
   add_foreign_key "api_tokens", "users"
   add_foreign_key "bundles", "variants"
   add_foreign_key "line_items", "orders"
-  add_foreign_key "orders", "addresses"
-  add_foreign_key "orders", "customers"
+  add_foreign_key "line_items", "variants"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
+  add_foreign_key "prices", "orders"
   add_foreign_key "user_connected_accounts", "users"
   add_foreign_key "variants", "products"
   add_foreign_key "webhook_endpoints", "accounts"
