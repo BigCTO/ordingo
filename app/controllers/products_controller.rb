@@ -31,7 +31,6 @@ class ProductsController < ApplicationController
 
   # POST /products or /products.json
   def create
-    puts "product_params #{product_params}"
     @product = Product.new(product_params)
 
     # Uncomment to authorize with Pundit
