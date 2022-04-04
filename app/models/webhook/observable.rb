@@ -12,9 +12,9 @@ module Webhook
         deliver_webhook(:updated)
       end
 
-      # after_commit on: :destroy do
-      #   deliver_webhook(:destroyed)
-      # end
+      after_commit on: :destroy do
+        deliver_webhook(:deleted)
+      end
     end
   end
 end

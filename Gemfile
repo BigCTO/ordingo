@@ -44,6 +44,8 @@ gem "nokogiri", ">= 1.12.5"
 
 gem 'friendly_id', '~> 5.4.0'
 gem "aws-sdk-s3", require: false
+gem 'taxjar-ruby', '~> 3.0'
+gem 'http', '~> 4.4', '>= 4.4.1'
 
 group :development, :test do
   # Start debugger with binding.b [https://github.com/ruby/debug]
@@ -56,6 +58,7 @@ group :development, :test do
   gem "annotate", github: "excid3/annotate_models", branch: "rails7"
   gem "letter_opener_web", "~> 2.0"
   gem "standard", require: false
+  gem 'rspec-rails', ">= 3.9.0"
 
   # Security tooling to
   # gem "brakeman"
