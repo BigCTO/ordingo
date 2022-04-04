@@ -31,6 +31,7 @@ class ProductsController < ApplicationController
 
   # POST /products or /products.json
   def create
+    puts "product_params #{product_params}"
     @product = Product.new(product_params)
 
     # Uncomment to authorize with Pundit
@@ -83,7 +84,14 @@ class ProductsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_params
-    params.require(:product).permit(:account_id, :name, :status, :type_of, variants_attributes: [ :id, :images, :name, :description, :price, :weight, :inventory, :_destroy, bundles_attributes: [ :id, :product_id, :bundled_product_id, :quantity, :_destroy]])
+    params.require(:product).permit(
+      :account_id, :name, :status, :type_of,
+      variants_attributes: [:id, :images, :name, :description, :price, :weight, :inventory, :_destroy,
+                            standard_pricing_attributes:[:id, :price, :_destroy],
+                            subscription_pricings_attributes:[:id, :interval_count, :interval, :price, :_destroy],
+                            bundles_attributes: [ :id, :product_id, :bundled_product_id, :quantity, :_destroy]
+      ]
+    )
 
     # Uncomment to use Pundit permitted attributes
     # params.require(:product).permit(policy(@product).permitted_attributes)

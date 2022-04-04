@@ -1,0 +1,6 @@
+<%= content_tag :div, class: "nested-fields my-8 md:grid md:grid-cols-7 md:gap-6", data: { new_record: form.object.new_record? } do %>
+  <%= form.label :price, class: "block text-sm font-medium text-gray-700 md:col-span-1 align-left" %>
+  <%= form.number_field :price, value: number_to_currency(form.object.price.to_f, delimiter: '', unit: ''), step: :any, class: "md:col-span-3 form-control" %>
+  <small><%= link_to "Remove", "#", class: "text-red-500 md:col-span-1", data: { action: "click->standard-pricing#remove_association" } %></small>
+  <%= form.hidden_field :_destroy %>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_30_072849) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_04_063240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -318,12 +318,32 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_30_072849) do
     t.integer "account_id"
     t.string "uuid"
     t.string "name"
+    t.string "description"
     t.integer "status"
     t.integer "type_of"
     t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_products_on_slug", unique: true
+  end
+
+  create_table "standard_pricings", force: :cascade do |t|
+    t.decimal "price", precision: 8, scale: 2
+    t.bigint "variant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["variant_id"], name: "index_standard_pricings_on_variant_id"
+  end
+
+  create_table "subscription_pricings", force: :cascade do |t|
+    t.integer "interval_count"
+    t.string "interval"
+    t.decimal "price", precision: 8, scale: 2
+    t.string "description"
+    t.bigint "variant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["variant_id"], name: "index_subscription_pricings_on_variant_id"
   end
 
   create_table "user_connected_accounts", force: :cascade do |t|
@@ -431,6 +451,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_30_072849) do
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
+  add_foreign_key "standard_pricings", "variants"
+  add_foreign_key "subscription_pricings", "variants"
   add_foreign_key "user_connected_accounts", "users"
   add_foreign_key "variants", "products"
   add_foreign_key "webhook_endpoints", "accounts"
