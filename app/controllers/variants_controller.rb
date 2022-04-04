@@ -33,6 +33,7 @@ class VariantsController < ApplicationController
   # POST /variants or /variants.json
   def create
     @variant = Variant.new(variant_params)
+    puts "variant_params #{variant_params}"
 
     # Uncomment to authorize with Pundit
     # authorize @variant

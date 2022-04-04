@@ -10,7 +10,6 @@ class CreateVariants < ActiveRecord::Migration[7.0]
       t.decimal :weight
       t.integer :inventory
       t.string :slug
-
       t.index :slug, unique: true
 
       t.timestamps

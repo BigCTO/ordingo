@@ -2,15 +2,16 @@
 #
 # Table name: products
 #
-#  id         :bigint           not null, primary key
-#  name       :string
-#  slug       :string
-#  status     :integer
-#  type_of    :integer
-#  uuid       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  account_id :integer
+#  id          :bigint           not null, primary key
+#  description :string
+#  name        :string
+#  slug        :string
+#  status      :integer
+#  type_of     :integer
+#  uuid        :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  account_id  :integer
 #
 # Indexes
 #
@@ -32,8 +33,8 @@ class Product < ApplicationRecord
   has_one_attached :image
   has_rich_text :description
 
-  enum type_of: {single: 0, bundle: 1}
-  enum status: {draft: 0, active: 1, archive: 2}
+  enum type_of: { single: 0, bundle: 1 }
+  enum status: { draft: 0, active: 1, archive: 2 }
 
   accepts_nested_attributes_for :variants, reject_if: proc { |attributes| attributes['name'].blank? }, allow_destroy: true
 
