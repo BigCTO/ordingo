@@ -1,5 +1,6 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
+  resources :prices
   resources :webhook_endpoints
   post 'webhook_endpoints/change_enabled/:id', to: 'webhook_endpoints#change_enabled'
   resources :orders

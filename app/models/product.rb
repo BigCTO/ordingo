@@ -47,4 +47,8 @@ class Product < ApplicationRecord
     self.uuid = self.slug
   end
 
+  def webhook_payload
+    { product: self }
+  end
+
 end

@@ -18,19 +18,19 @@
 
   <div class="form-group">
     <%= form.label :transaction_status %>
-    <%= form.select(:transaction_status, ["pending", "open", "ready", "out_for_delivery", "complete", "cancelled"], {}, {class: "flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300 mr-4"}) %>
+    <%= form.select(:transaction_status, Order::STATUS, {}, {class: "flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300 mr-4"}) %>
 
   </div>
 
   <div class="form-group">
     <%= form.label :delivery_method %>
-    <%= form.select(:delivery_method, ["pending", "open", "ready", "out_for_delivery", "complete", "cancelled"], {}, {class: "flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300 mr-4"}) %>
+    <%= form.select(:delivery_method, Order::STATUS, {}, {class: "flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300 mr-4"}) %>
 
   </div>
 
   <div class="form-group">
     <%= form.label :fulfillment_status %>
-    <%= form.select(:fulfillment_status, ["pending", "open", "ready", "out_for_delivery", "complete", "cancelled"], {}, {class: "flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300 mr-4"}) %>
+    <%= form.select(:fulfillment_status, Order::STATUS, {}, {class: "flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300 mr-4"}) %>
   </div>
 
     <div class="mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
@@ -45,10 +45,10 @@
         <div class="my-8 divide-y divide-gray-200" data-controller="order-items"> 
 
           <%= form.fields_for :line_items do |item| %>
-            <div class="py-6 grid grid-cols-6 gap-6">
+            <div class="py-6 grid grid-cols-8 gap-6">
 
 
-              <div class="sm:col-span-3">
+              <div class="sm:col-span-4">
                 <%= item.label "Product Variant", class: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" %>
                 <div class="mt-1">
                   <%= item.select(:variant_id, Variant.all.collect {|v| [ "#{v.product.name} - #{v.name}", v.id ] }, {}, { include_blank: true, class: "input"}) %>
@@ -57,7 +57,7 @@
 
               <div class="col-span-6 sm:col-span-3">
                 <%= item.label :quantity %>
-                <%= item.number_field :quantity, value: 1, disabled: true, class: "input", placeholder: "Quantity" %>
+                <%= item.number_field :quantity, value: 1, class: "form-control", placeholder: "Quantity" %>
               </div>
             </div>
           <% end %>

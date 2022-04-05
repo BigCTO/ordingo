@@ -43,6 +43,9 @@ class Variant < ApplicationRecord
   has_one :standard_pricing, inverse_of: :variant, dependent: :destroy
   has_many :variant_options, inverse_of: :variant, dependent: :destroy
 
+  has_many :line_items
+  has_many :orders, through: :line_items
+
   accepts_nested_attributes_for :bundles, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :subscription_pricings, reject_if: proc { |attributes| attributes['price'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :standard_pricing, reject_if: proc { |attributes| attributes['price'].blank? }, allow_destroy: true
