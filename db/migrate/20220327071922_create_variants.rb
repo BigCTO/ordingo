@@ -7,8 +7,8 @@ class CreateVariants < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :description
       t.decimal :price, precision: 8, scale: 2
-      t.decimal :weight
       t.integer :inventory
+      t.string :sku
       t.string :slug
       t.index :slug, unique: true
 

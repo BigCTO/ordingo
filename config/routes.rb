@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     resources :addresses
   end
   resources :variants
-  resources :products
+  resources :products do
+    member do
+      delete :delete_image_attachment
+    end
+  end
   draw :turbo
 
   # Jumpstart views

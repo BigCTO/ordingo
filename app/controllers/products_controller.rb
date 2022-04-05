@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: %i[show edit update destroy]
   before_action :authenticate_user!
   # Uncomment to enforce Pundit authorization
   # after_action :verify_authorized
@@ -14,8 +16,7 @@ class ProductsController < ApplicationController
   end
 
   # GET /products/1 or /products/1.json
-  def show
-  end
+  def show; end
 
   # GET /products/new
   def new
@@ -26,8 +27,7 @@ class ProductsController < ApplicationController
   end
 
   # GET /products/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /products or /products.json
   def create
@@ -38,7 +38,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: "Product was successfully created." }
+        format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -51,7 +51,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to @product, notice: "Product was successfully updated." }
+        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -64,9 +64,14 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     respond_to do |format|
-      format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
+      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def delete_image_attachment
+    ActiveStorage::Attachment.find(params[:id]).purge
+    redirect_back(fallback_location: root_path)
   end
 
   private
@@ -84,12 +89,13 @@ class ProductsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def product_params
     params.require(:product).permit(
-      :account_id, :name, :status, :type_of,
-      variants_attributes: [:id, :images, :name, :description, :price, :weight, :inventory, :_destroy,
-                            standard_pricing_attributes:[:id, :price, :_destroy],
-                            subscription_pricings_attributes:[:id, :interval_count, :interval, :price, :_destroy],
-                            bundles_attributes: [ :id, :product_id, :bundled_product_id, :quantity, :_destroy]
-      ]
+      :account_id, :name, :status, :type_of, :image,
+      variants_attributes: [:id, :name, :description, :price, :sku, :inventory, :_destroy,
+                            { standard_pricing_attributes: %i[id price _destroy],
+                              subscription_pricings_attributes: %i[id interval_count interval price _destroy],
+                              variant_options_attributes: %i[id name value _destroy],
+                              bundles_attributes: %i[id product_id bundled_product_id quantity _destroy],
+                              images: [] }]
     )
 
     # Uncomment to use Pundit permitted attributes
