@@ -7,9 +7,9 @@
 #  inventory   :integer
 #  name        :string
 #  price       :decimal(8, 2)
+#  sku         :string
 #  slug        :string
 #  uuid        :string
-#  weight      :decimal(, )
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  account_id  :integer
