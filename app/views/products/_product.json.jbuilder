@@ -8,9 +8,10 @@ json.variants product.variants do |variant|
   json.id variant.uuid
   json.name variant.name
   json.description variant.description
-  json.price variant.price
-  json.weight variant.weight
+  json.standard_price variant.standard_pricing
+  json.subscription_price variant.subscription_pricings
   json.inventory variant.inventory
+  json.options variant.variant_options
 
   json.bundles variant.bundles do |bundle|
     json.id bundle.id
