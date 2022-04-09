@@ -87,3 +87,15 @@
     @apply: bg-green-400;
     background-color: #68D391;
 }
+
+.carousel-indicators button{
+    background-color: gray !important;
+}
+
+.carousel-control-prev span, .carousel-control-next span{
+    background-color: gray !important;
+}
+
+.carousel-caption h4{
+    color: red !important;
+}

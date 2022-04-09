@@ -21,5 +21,8 @@ import "./controllers"
 import "./src/**/*"
 require("local-time").start()
 
+
+import 'tw-elements';
+
 // Start Rails UJS
 Rails.start()

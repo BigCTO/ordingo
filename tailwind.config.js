@@ -9,6 +9,7 @@ module.exports = {
     require('@tailwindcss/forms')({ strategy: 'class' }),
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/typography'),
+    require('tw-elements/dist/plugin')
   ],
 
   content: [
@@ -18,6 +19,7 @@ module.exports = {
     './app/views/**/*.haml',
     './lib/jumpstart/app/views/**/*.erb',
     './lib/jumpstart/app/helpers/**/*.rb',
+    './node_modules/tw-elements/dist/js/**/*.js'
   ],
 
   // All the default values will be compiled unless they are overridden below

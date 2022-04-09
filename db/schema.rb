@@ -405,6 +405,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_04_063240) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "variant_options", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "value", null: false
+    t.bigint "variant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["variant_id"], name: "index_variant_options_on_variant_id"
+  end
+
   create_table "variants", force: :cascade do |t|
     t.integer "account_id"
     t.string "uuid"
@@ -412,8 +421,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_04_063240) do
     t.string "name"
     t.string "description"
     t.decimal "price", precision: 8, scale: 2
-    t.decimal "weight"
     t.integer "inventory"
+    t.string "sku"
     t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -459,6 +468,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_04_063240) do
   add_foreign_key "standard_pricings", "variants"
   add_foreign_key "subscription_pricings", "variants"
   add_foreign_key "user_connected_accounts", "users"
+  add_foreign_key "variant_options", "variants"
   add_foreign_key "variants", "products"
   add_foreign_key "webhook_endpoints", "accounts"
   add_foreign_key "webhook_events", "webhook_endpoints", on_delete: :cascade

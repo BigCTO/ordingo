@@ -7,9 +7,9 @@
 #  inventory   :integer
 #  name        :string
 #  price       :decimal(8, 2)
+#  sku         :string
 #  slug        :string
 #  uuid        :string
-#  weight      :decimal(, )
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  account_id  :integer
@@ -41,6 +41,7 @@ class Variant < ApplicationRecord
   has_many :bundled_products, through: :bundles
   has_many :subscription_pricings, inverse_of: :variant, dependent: :destroy
   has_one :standard_pricing, inverse_of: :variant, dependent: :destroy
+  has_many :variant_options, inverse_of: :variant, dependent: :destroy
 
   has_many :line_items
   has_many :orders, through: :line_items
@@ -48,6 +49,7 @@ class Variant < ApplicationRecord
   accepts_nested_attributes_for :bundles, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :subscription_pricings, reject_if: proc { |attributes| attributes['price'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :standard_pricing, reject_if: proc { |attributes| attributes['price'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :variant_options, reject_if: proc { |attributes| attributes['name'].blank? }, allow_destroy: true
 
   def get_uuid
     "V-#{SecureRandom.alphanumeric(10)}"
