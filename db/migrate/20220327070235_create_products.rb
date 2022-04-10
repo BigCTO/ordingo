@@ -6,7 +6,6 @@ class CreateProducts < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :description
       t.integer :status
-      t.integer :type_of
       t.string :slug
 
       t.index :slug, unique: true

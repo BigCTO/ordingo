@@ -14,14 +14,13 @@
         <%= form.select(:status, %w[draft active archive], {}, class: "input") %>
       </div>
     </div>
-
-    <div class="form-group sm:col-span-1">
-      <%= form.label :type_of, class: "block text-sm font-medium text-gray-700" %>
+    <div class="form-group sm:col-span-2">
+      <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
       <div class="mt-1">
-        <%= form.select(:type_of, %w[single bundle], {}, class: "input") %>
+        <%= form.rich_text_area :description, class: "form-control", rows: 5 %>
       </div>
     </div>
-    <div class="form-group sm:col-span-3">
+    <div class="form-group sm:col-span-2">
       <div>
         <label for="cover_photo" class="block text-sm font-medium text-gray-700">
           Cover photo
@@ -56,40 +55,70 @@
     </div>
   </div>
 
-  <div class="mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-    <div class="md:grid md:grid-cols-3 md:gap-6">
-      <div class="md:col-span-1">
-        <h3 class="text-lg font-medium leading-6 text-gray-900">Variants</h3>
-        <p class="mt-1 text-sm text-gray-500">
-          Add your product variants
-        </p>
-      </div>
-    </div>
-    <div class="mt-5 md:mt-0 md:col-span-2">
-      <div class="my-8 divide-y divide-gray-200" data-controller="nested-variant">
-
-        <template data-nested-variant-target="template">
-          <%= form.fields_for :variants, Variant.new, child_index: 'NEW_RECORD' do |variant| %>
-            <%= render "variant_fields", form: variant%>
-          <% end %>
-        </template>
-
-
-        <%= form.fields_for :variants do |variant| %>
-          <%= render "variant_fields", form: variant %>
-        <% end %>
-
-        <div class="py-4 flex justify-end" data-nested-variant-target="links">
-          <%= link_to "Add Variant", "#", class: "btn btn-primary inline-flex justify-center text-sm font-medium rounded-md hover:text-indigo-700 focus:outline-none", data: { action: "click->nested-variant#add_association" } %>
+  <div class="col-span-6" data-controller="product-option">
+    <div class="accordion">
+      <div class="accordion-item bg-white border border-gray-200">
+        <h2 class="accordion-header mb-0" id="headingOne">
+          <button
+            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+            type="button" data-bs-toggle="collapse" data-bs-target="#variantOption<%= form.index %>" aria-expanded="true"
+            aria-controls="variantOption<%= form.index %>">
+            OPTIONS
+          </button>
+        </h2>
+        <div id="variantOption<%= form.index %>" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+          <div class="accordion-body py-4 px-5">
+            <div class="grid grid-cols-2">
+              <template data-product-option-target="template">
+                <%= form.fields_for :product_options, ProductOption.new, child_index: 'NEW_RECORD' do |product_option| %>
+                  <%= render "product_option_fields", form: product_option %>
+                <% end %>
+              </template>
+              <%= form.fields_for :product_options do |product_option| %>
+                <%= render "product_option_fields", form: product_option %>
+              <% end %>
+              <div class="flex mt-2 col-span-2" data-product-option-target="links">
+                <%= link_to "Add Option", "#", class: "btn btn-primary inline-flex justify-center text-sm font-medium rounded-md hover:text-indigo-700 focus:outline-none", data: { action: "click->product-option#add_association" } %>
+              </div>
+            </div>
+          </div>
         </div>
-
       </div>
     </div>
   </div>
+  <% if form.object.variants.count > 0 %>
+    <div class="mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Variants</h3>
+        </div>
+      </div>
+      <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="my-8 divide-y divide-gray-200" data-controller="nested-variant">
+          <table class="table table-responsive">
+            <thead class="bg-gray-100">
+            <tr>
+              <th class="p-3 uppercase text-xs text-gray-500">Image</th>
+              <th class="p-3 uppercase text-xs text-gray-500">Variant</th>
+              <th class="p-3 uppercase text-xs text-gray-500">Name</th>
+              <th class="p-3 uppercase text-xs text-gray-500">SKU</th>
+              <th class="p-3 uppercase text-xs text-gray-500">Price</th>
+              <th class="p-3 uppercase text-xs text-gray-500">Inventory</th>
+              <th class="p-3 uppercase text-xs text-gray-500">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%= form.fields_for :variants do |variant| %>
+              <%= render "variant_fields", form: variant %>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
-
-
-  <div>
+  <div class="mt-5">
     <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-primary" %>
 
     <% if form.object.new_record? %>

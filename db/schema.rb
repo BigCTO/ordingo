@@ -319,13 +319,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_061811) do
     t.index ["order_id"], name: "index_prices_on_order_id"
   end
 
+  create_table "product_options", force: :cascade do |t|
+    t.string "name", null: false
+    t.jsonb "value", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_options_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.integer "account_id"
     t.string "uuid"
     t.string "name"
     t.string "description"
     t.integer "status"
-    t.integer "type_of"
     t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -405,15 +413,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_061811) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "variant_options", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "value", null: false
-    t.bigint "variant_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["variant_id"], name: "index_variant_options_on_variant_id"
-  end
-
   create_table "variants", force: :cascade do |t|
     t.integer "account_id"
     t.string "uuid"
@@ -424,6 +423,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_061811) do
     t.integer "inventory"
     t.string "sku"
     t.string "slug"
+    t.string "option", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_variants_on_product_id"
@@ -465,10 +465,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_061811) do
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
   add_foreign_key "prices", "orders"
+  add_foreign_key "product_options", "products"
   add_foreign_key "standard_pricings", "variants"
   add_foreign_key "subscription_pricings", "variants"
   add_foreign_key "user_connected_accounts", "users"
-  add_foreign_key "variant_options", "variants"
   add_foreign_key "variants", "products"
   add_foreign_key "webhook_endpoints", "accounts"
   add_foreign_key "webhook_events", "webhook_endpoints", on_delete: :cascade

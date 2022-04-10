@@ -1,12 +1,12 @@
-<%= content_tag :div, class: "nested-fields my-8 md:grid md:grid-cols-7 md:gap-6", data: { new_record: form.object.new_record? } do %>
-  <div class="md:col-span-1 flex items-center">
-    <label class="align-left">Every</label>
+<%= content_tag :div, class: "pt-2 nested-fields md:grid md:grid-cols-7 md:gap-6", data: { new_record: form.object.new_record? } do %>
+  <div class="col-span-2 flex items-center">
+    <label class="px-2">Every</label>
+    <%= form.number_field :interval_count, value: form.object.interval_count || 1, class: "form-control" %>
   </div>
-  <%= form.number_field :interval_count, value: form.object.interval_count || 1, class: "md:col-span-1 form-control" %>
   <%= form.select(:interval, SubscriptionPricing::INTERVAL, {}, class: "md:col-span-2 form-control") %>
-  <%= form.number_field :price, value: form.object.price || 0.0, step: :any, class: "md:col-span-2 form-control" %>
-  <div class="flex items-center px-2">
-    <small><%= link_to "Remove", "#", class: "text-red-500", data: { action: "click->subscription-pricing#remove_association" } %></small>
+  <div class="col-span-3 flex items-center px-2 text-left">
+    <%= form.number_field :price, value: form.object.price || 0.0, step: :any, class: "form-control" %>
+    <small><%= link_to "Remove", "#", class: "text-red-500 px-2", data: { action: "click->subscription-pricing#remove_association" } %></small>
   </div>
   <%= form.hidden_field :_destroy %>
 <% end %>

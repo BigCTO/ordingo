@@ -6,6 +6,7 @@
 #  description :string
 #  inventory   :integer
 #  name        :string
+#  option      :string           not null
 #  price       :decimal(8, 2)
 #  sku         :string
 #  slug        :string

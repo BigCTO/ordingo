@@ -6,6 +6,7 @@
 #  description :string
 #  inventory   :integer
 #  name        :string
+#  option      :string           not null
 #  price       :decimal(8, 2)
 #  sku         :string
 #  slug        :string
@@ -36,12 +37,11 @@ class Variant < ApplicationRecord
   after_update_commit  -> { broadcast_replace_later_to self }
   after_destroy_commit -> { broadcast_remove_to :variants, target: dom_id(self, :index) }
 
-  has_many_attached :images
+  has_one_attached :image
   has_many :bundles, dependent: :destroy
   has_many :bundled_products, through: :bundles
   has_many :subscription_pricings, inverse_of: :variant, dependent: :destroy
   has_one :standard_pricing, inverse_of: :variant, dependent: :destroy
-  has_many :variant_options, inverse_of: :variant, dependent: :destroy
 
   has_many :line_items
   has_many :orders, through: :line_items
@@ -49,7 +49,6 @@ class Variant < ApplicationRecord
   accepts_nested_attributes_for :bundles, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :subscription_pricings, reject_if: proc { |attributes| attributes['price'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :standard_pricing, reject_if: proc { |attributes| attributes['price'].blank? }, allow_destroy: true
-  accepts_nested_attributes_for :variant_options, reject_if: proc { |attributes| attributes['name'].blank? }, allow_destroy: true
 
   def get_uuid
     "V-#{SecureRandom.alphanumeric(10)}"
@@ -58,4 +57,10 @@ class Variant < ApplicationRecord
    def set_uuid
      self.uuid = self.slug
    end
+
+  def variant_str
+    return unless option.present?
+
+    option.split(Product::OPTION_SEPARATOR).map { |val| val.split(Product::OPTION_KEY_VAL_SEPARATOR)[1] }.join('/')
+  end
 end

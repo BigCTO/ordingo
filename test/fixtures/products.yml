@@ -7,7 +7,6 @@
 #  name        :string
 #  slug        :string
 #  status      :integer
-#  type_of     :integer
 #  uuid        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

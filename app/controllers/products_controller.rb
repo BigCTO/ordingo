@@ -89,13 +89,13 @@ class ProductsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def product_params
     params.require(:product).permit(
-      :account_id, :name, :status, :type_of, :image,
-      variants_attributes: [:id, :name, :description, :price, :sku, :inventory, :_destroy,
+      :account_id, :name, :status, :image, :description,
+      product_options_attributes: %i[id name value _destroy],
+      variants_attributes: [:id, :name, :description, :price, :sku, :inventory, :_destroy, :image,
                             { standard_pricing_attributes: %i[id price _destroy],
                               subscription_pricings_attributes: %i[id interval_count interval price _destroy],
-                              variant_options_attributes: %i[id name value _destroy],
                               bundles_attributes: %i[id product_id bundled_product_id quantity _destroy],
-                              images: [] }]
+                              }]
     )
 
     # Uncomment to use Pundit permitted attributes
