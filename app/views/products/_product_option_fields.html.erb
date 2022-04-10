@@ -1,4 +1,4 @@
-<%= content_tag :div, class: "nested-fields my-8 form-inline col-span-1", data: { new_record: form.object.new_record? } do %>
+<%= content_tag :div, class: "nested-fields my-2 form-inline col-span-1", data: { new_record: form.object.new_record? } do %>
   <div class="grid grid-cols-3 gap-2">
     <div class="form-group col-span-1">
       <label>Name</label>
@@ -9,7 +9,7 @@
       <%= form.text_field :value, class: "md:col-span-1 form-control" %>
     </div>
     <div class="flex items-center px-2">
-      <small><%= link_to "Remove", "#", class: "text-red-500", data: { action: "click->variant-option#remove_association" } %></small>
+      <small><%= link_to "Remove", "#", class: "text-red-500", data: { action: "click->product-option#remove_association" } %></small>
     </div>
     <%= form.hidden_field :_destroy %>
   </div>

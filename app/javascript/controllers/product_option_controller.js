@@ -14,21 +14,16 @@ export default class extends Controller {
 
   connect() {
     this.wrapperClass = this.data.get("wrapperClass") || "nested-fields"
-    console.log(this.wrapperClass)
   }
 
   add_association(event) {
     event.preventDefault()
-
-    console.log("it should add")
-
     var content = this.templateTarget.innerHTML.replace(/NEW_RECORD/g, new Date().getTime())
     this.linksTarget.insertAdjacentHTML('beforebegin', content)
   }
 
   remove_association(event) {
     event.preventDefault()
-    console.log("it should remove")
     let wrapper = event.target.closest("." + this.wrapperClass)
 
     // New records are simply removed from the page

@@ -11,7 +11,7 @@ class CreateVariants < ActiveRecord::Migration[7.0]
       t.string :sku
       t.string :slug
       t.index :slug, unique: true
-
+      t.string :option, null: false
       t.timestamps
     end
   end

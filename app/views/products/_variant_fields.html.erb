@@ -1,165 +1,79 @@
 <%= content_tag :div, class: "nested-fields", data: { new_record: form.object.new_record? } do %>
-  <div class="py-6 grid gap-y-1 gap-x-4 grid-cols-6" >
-    <div class="accordion col-span-6">
-      <div class="accordion-item bg-white border border-gray-200">
-        <h2 class="accordion-header mb-0" id="headingOne">
-          <button
-            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
-            type="button" data-bs-toggle="collapse" data-bs-target="#basicInfo<%= form.index %>" aria-expanded="true"
-            aria-controls="basicInfo<%= form.index %>">
-            Basic Info
-          </button>
-        </h2>
-        <div id="basicInfo<%= form.index %>" class="accordion-collapse collapse" aria-labelledby="headingOne">
-          <div class="accordion-body py-4 px-5 grid grid-cols-6 gap-x-4">
-            <div class="sm:col-span-1">
-              <%= form.label :name, "Variant Info", class: "block text-sm font-medium text-gray-700" %>
-              <div class="mt-1">
-                <%= form.text_field :name, class: "form-control" %>
-              </div>
-              <div class="form-group mt-5">
-                <%= form.label :sku, class: "block text-sm font-medium text-gray-700" %>
-                <div class="mt-1">
-                  <%= form.text_field :sku,class: "form-control" %>
-                </div>
-              </div>
-            </div>
-
-            <div class="sm:col-span-1">
-              <%= form.label :price, class: "block text-sm font-medium text-gray-700" %>
-              <div class="mt-1">
-                <%= form.number_field :price, value: form.object.price || 0.0, step: :any, class: "form-control" %>
-              </div>
-              <div class="form-group mt-5">
-                <%= form.label :inventory, class: "block text-sm font-medium text-gray-700" %>
-                <div class="mt-1">
-                  <%= form.number_field :inventory,class: "form-control" %>
-                </div>
-              </div>
-            </div>
-
-            <div class="sm:col-span-1">
-              <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
-              <div class="mt-1">
-                <%= form.text_area :description, class: "form-control", rows: 5 %>
-              </div>
-            </div>
-
-            <div class="sm:col-span-3">
-              <label for="cover_photo" class="block text-sm font-medium text-gray-700">
-                Images
-              </label>
-              <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                <div class="space-y-1 text-center">
-                  <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <div class="flex text-sm text-gray-600 justify-center">
-                    <%= form.label :images, class: "relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500" do %>
-                      <span>Upload a file</span>
-                      <%= form.file_field :images, direct_upload: true, multiple: true, class: "sr-only" %>
-                    <% end %>
-                  </div>
-                  <p class="text-xs text-gray-500">
-                    PNG, JPG, GIF up to 10MB
-                  </p>
-                </div>
-              </div>
-              <div class="mt-2">
-                <%= render "layouts/image_gallery", images: form.object.images %>
-              </div>
-            </div>
-            <%= form.hidden_field :_destroy %>
+  <tr class="border-b border-dashed">
+    <td>
+      <% if form.object.image.attached? %>
+        <div data-controller="nested-variant">
+          <div class="text-right border mt-2 image-container">
+            <%= form.label :image, class: "relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500" do %>
+              <%= image_tag form.object.image, class: "w-auto h-10 w-100" %>
+              <%= form.file_field :image, direct_upload: true, class: "sr-only" %>
+            <% end %>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-span-6">
-      <div class="accordion">
-        <div class="accordion-item bg-white border border-gray-200">
-          <h2 class="accordion-header mb-0" id="headingOne">
-            <button
-              class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
-              type="button" data-bs-toggle="collapse" data-bs-target="#paymentOption<%= form.index %>" aria-expanded="true"
-              aria-controls="paymentOption<%= form.index %>">
-              Payment Options
-            </button>
-          </h2>
-          <div id="paymentOption<%= form.index %>" class="accordion-collapse collapse" aria-labelledby="headingOne">
-            <div class="accordion-body py-4 px-5 grid grid-cols-6 gap-x-4">
-              <div class="col-span-3" data-controller="standard-pricing">
-                <div class="my-8">
-                  <h4 class="text-lg font-medium leading-6 text-gray-900">Standard Pricing</h4>
-                  <template data-standard-pricing-target="template">
-                    <%= form.fields_for :standard_pricing, StandardPricing.new, child_index: 'NEW_RECORD' do |standard_pricing| %>
-                      <%= render "standard_pricing_fields", form: standard_pricing %>
-                    <% end %>
-                  </template>
-                  <%= form.fields_for :standard_pricing do |standard_pricing| %>
-                    <%= render "standard_pricing_fields", form: standard_pricing %>
-                  <% end %>
-                  <div class="flex mt-3" data-standard-pricing-target="links">
-                    <%= link_to "Add New Standard Pricing", "#", class: form.object.standard_pricing.present? ? "hide-element add-st-pricing inline-flex justify-center text-sm font-medium rounded-md text-indigo-600 hover:text-indigo-700 focus:outline-none" : "add-st-pricing inline-flex justify-center text-sm font-medium rounded-md text-indigo-600 hover:text-indigo-700 focus:outline-none", data: { action: "click->standard-pricing#add_association" } %>
-                  </div>
-                </div>
-              </div>
-              <div class="col-span-3" data-controller="subscription-pricing">
-                <div class="my-8">
-                  <h4 class="font-medium leading-6 text-gray-900">Subscription Pricing</h4>
-                  <template data-subscription-pricing-target="template">
-                    <%= form.fields_for :subscription_pricings, SubscriptionPricing.new, child_index: 'NEW_RECORD' do |subscription_pricing| %>
-                      <%= render "subscription_pricing_fields", form: subscription_pricing %>
-                    <% end %>
-                  </template>
-                  <%= form.fields_for :subscription_pricings do |subscription_pricing| %>
-                    <%= render "subscription_pricing_fields", form: subscription_pricing %>
-                  <% end %>
-                  <div class="flex mt-3" data-subscription-pricing-target="links">
-                    <%= link_to "Add New Subscription Pricing", "#", class: "inline-flex justify-center text-sm font-medium rounded-md text-indigo-600 hover:text-indigo-700 focus:outline-none", data: { action: "click->subscription-pricing#add_association" } %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <% else %>
+        <div class="flex justify-center px-6 pt-3 pb-2 border-2 border-gray-300 border-dashed rounded-md">
+          <%= form.label :image, class: "relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500" do %>
+            <span>Image</span>
+            <%= form.file_field :image, direct_upload: true, class: "sr-only" %>
+          <% end %>
+        </div>
+      <% end %>
+    </td>
+    <td class="align-middle text-center">
+      <strong class="text-gray-500"><%= form.object.variant_str %></strong>
+    </td>
+    <td>
+      <%= form.text_field :name, class: "form-control" %>
+    </td>
+    <td>
+      <%= form.text_field :sku,class: "form-control" %>
+    </td>
+    <td>
+      <%= form.number_field :price, value: form.object.price || 0.0, step: :any, class: "form-control" %>
+    </td>
+    <td>
+      <%= form.number_field :inventory,class: "form-control" %>
+    </td>
+    <td>
+      <%= form.text_area :description, class: "form-control", rows: 1 %>
+    </td>
+  </tr>
+  <tr class="border-b border-dashed">
+    <td class="align-middle">Standard Pricing</td>
+    <td colspan="6">
+      <div class="grid grid-cols-3" data-controller="standard-pricing">
+        <template data-standard-pricing-target="template">
+          <%= form.fields_for :standard_pricing, StandardPricing.new, child_index: 'NEW_RECORD' do |standard_pricing| %>
+            <%= render "standard_pricing_fields", form: standard_pricing %>
+          <% end %>
+        </template>
+        <%= form.fields_for :standard_pricing do |standard_pricing| %>
+          <%= render "standard_pricing_fields", form: standard_pricing %>
+        <% end %>
+        <div class="flex mt-3" data-standard-pricing-target="links">
+          <%= link_to "Add New Standard Pricing", "#", class: form.object.standard_pricing.present? ? "hide-element add-st-pricing inline-flex justify-center text-sm font-medium rounded-md text-indigo-600 hover:text-indigo-700 focus:outline-none" : "add-st-pricing inline-flex justify-center text-sm font-medium rounded-md text-indigo-600 hover:text-indigo-700 focus:outline-none", data: { action: "click->standard-pricing#add_association" } %>
         </div>
       </div>
-    </div>
-    <div class="col-span-6" data-controller="variant-option">
-      <div class="accordion">
-        <div class="accordion-item bg-white border border-gray-200">
-          <h2 class="accordion-header mb-0" id="headingOne">
-            <button
-              class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
-              type="button" data-bs-toggle="collapse" data-bs-target="#variantOption<%= form.index %>" aria-expanded="true"
-              aria-controls="variantOption<%= form.index %>">
-              Variant Options
-            </button>
-          </h2>
-          <div id="variantOption<%= form.index %>" class="accordion-collapse collapse" aria-labelledby="headingOne">
-            <div class="accordion-body py-4 px-5">
-              <div class="grid grid-cols-2">
-                <template data-variant-option-target="template">
-                  <%= form.fields_for :variant_options, VariantOption.new, child_index: 'NEW_RECORD' do |variant_option| %>
-                    <%= render "variant_option_fields", form: variant_option %>
-                  <% end %>
-                </template>
-                <%= form.fields_for :variant_options do |variant_option| %>
-                  <%= render "variant_option_fields", form: variant_option %>
-                <% end %>
-                <div class="flex mt-3 col-span-2" data-variant-option-target="links">
-                  <%= link_to "Add Option", "#", class: "btn btn-primary inline-flex justify-center text-sm font-medium rounded-md hover:text-indigo-700 focus:outline-none", data: { action: "click->variant-option#add_association" } %>
-                </div>
-              </div>
-            </div>
-          </div>
+    </td>
+  </tr>
+  <tr class="border-b-2">
+    <td class="align-middle">Subscription Pricing</td>
+    <td colspan="6">
+      <div data-controller="subscription-pricing" class="grid grid-cols-2">
+        <template data-subscription-pricing-target="template">
+          <%= form.fields_for :subscription_pricings, SubscriptionPricing.new, child_index: 'NEW_RECORD' do |subscription_pricing| %>
+            <%= render "subscription_pricing_fields", form: subscription_pricing %>
+          <% end %>
+        </template>
+        <%= form.fields_for :subscription_pricings do |subscription_pricing| %>
+          <%= render "subscription_pricing_fields", form: subscription_pricing %>
+        <% end %>
+        <div class="flex mt-3 col-span-2" data-subscription-pricing-target="links">
+          <%= link_to "Add New Subscription Pricing", "#", class: "inline-flex justify-center text-sm font-medium rounded-md text-indigo-600 hover:text-indigo-700 focus:outline-none", data: { action: "click->subscription-pricing#add_association" } %>
         </div>
       </div>
-    </div>
-    <div class="col-span-6 text-center mt-2">
-      <%= link_to "Remove Variant", "#", class: "btn btn-danger", data: { action: "click->nested-variant#remove_association" } %>
-    </div>
-  </div>
-
+    </td>
+  </tr>
 <% end %>
 <style>
     .align-left{
@@ -167,5 +81,14 @@
     }
     .hide-element{
         display: none;
+    }
+    .align-middle{
+        vertical-align: middle !important;
+    }
+    td{
+        padding: 10px 20px;
+    }
+    .w-100{
+        width: 100%;
     }
 </style>
