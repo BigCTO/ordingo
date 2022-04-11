@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       delete :delete_image_attachment
     end
   end
+  post 'products/generate_variants/', to: 'products#generate_variants'
   draw :turbo
 
   # Jumpstart views

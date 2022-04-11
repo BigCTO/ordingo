@@ -74,6 +74,10 @@ class ProductsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def generate_variants
+    render json: Product.generate_all_options(JSON.parse(params[:options]))
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -91,7 +95,7 @@ class ProductsController < ApplicationController
     params.require(:product).permit(
       :account_id, :name, :status, :image, :description,
       product_options_attributes: %i[id name value _destroy],
-      variants_attributes: [:id, :name, :description, :price, :sku, :inventory, :_destroy, :image,
+      variants_attributes: [:id, :name, :description, :price, :sku, :inventory, :_destroy, :image, :option,
                             { standard_pricing_attributes: %i[id price _destroy],
                               subscription_pricings_attributes: %i[id interval_count interval price _destroy],
                               bundles_attributes: %i[id product_id bundled_product_id quantity _destroy],

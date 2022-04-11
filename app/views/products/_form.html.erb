@@ -54,39 +54,39 @@
       </div>
     </div>
   </div>
-
-  <div class="col-span-6" data-controller="product-option">
-    <div class="accordion">
-      <div class="accordion-item bg-white border border-gray-200">
-        <h2 class="accordion-header mb-0" id="headingOne">
-          <button
-            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
-            type="button" data-bs-toggle="collapse" data-bs-target="#variantOption<%= form.index %>" aria-expanded="true"
-            aria-controls="variantOption<%= form.index %>">
-            OPTIONS
-          </button>
-        </h2>
-        <div id="variantOption<%= form.index %>" class="accordion-collapse collapse show" aria-labelledby="headingOne">
-          <div class="accordion-body py-4 px-5">
-            <div class="grid grid-cols-2">
-              <template data-product-option-target="template">
-                <%= form.fields_for :product_options, ProductOption.new, child_index: 'NEW_RECORD' do |product_option| %>
+  <div data-controller="product-option">
+    <div class="col-span-6">
+      <div class="accordion">
+        <div class="accordion-item bg-white border border-gray-200">
+          <h2 class="accordion-header mb-0" id="headingOne">
+            <button
+              class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+              type="button" data-bs-toggle="collapse" data-bs-target="#productOption<%= form.index %>" aria-expanded="true"
+              aria-controls="productOption<%= form.index %>">
+              OPTIONS
+            </button>
+          </h2>
+          <div id="productOption<%= form.index %>" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+            <div class="accordion-body py-4 px-5">
+              <div class="grid grid-cols-2">
+                <template data-product-option-target="template">
+                  <%= form.fields_for :product_options, ProductOption.new, child_index: 'NEW_RECORD' do |product_option| %>
+                    <%= render "product_option_fields", form: product_option %>
+                  <% end %>
+                </template>
+                <%= form.fields_for :product_options do |product_option| %>
                   <%= render "product_option_fields", form: product_option %>
                 <% end %>
-              </template>
-              <%= form.fields_for :product_options do |product_option| %>
-                <%= render "product_option_fields", form: product_option %>
-              <% end %>
-              <div class="flex mt-2 col-span-2" data-product-option-target="links">
-                <%= link_to "Add Option", "#", class: "btn btn-primary inline-flex justify-center text-sm font-medium rounded-md hover:text-indigo-700 focus:outline-none", data: { action: "click->product-option#add_association" } %>
+                <div class="flex mt-2 col-span-2" data-product-option-target="links">
+                  <%= link_to "Add Option", "#", class: "btn btn-primary inline-flex justify-center text-sm font-medium rounded-md hover:text-indigo-700 focus:outline-none", data: { action: "click->product-option#add_association" } %>
+                  <%= link_to "Generate Variant", "#", class: "generate-variant ml-3 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800", data: { action: "click->product-option#generate_variant" } %>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <% if form.object.variants.count > 0 %>
     <div class="mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
       <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
@@ -94,7 +94,7 @@
         </div>
       </div>
       <div class="mt-5 md:mt-0 md:col-span-2">
-        <div class="my-8 divide-y divide-gray-200" data-controller="nested-variant">
+        <div class="my-8 divide-y divide-gray-200">
           <table class="table table-responsive">
             <thead class="bg-gray-100">
             <tr>
@@ -107,16 +107,23 @@
               <th class="p-3 uppercase text-xs text-gray-500">Description</th>
             </tr>
             </thead>
-            <tbody>
-            <%= form.fields_for :variants do |variant| %>
-              <%= render "variant_fields", form: variant %>
+            <tbody data-product-option-target="variantBody">
+            <template data-product-option-target="variantTemplate">
+              <%= form.fields_for :variants, Variant.new, child_index: 'NEW_RECORD' do |variant| %>
+                <%= render "variant_fields", form: variant %>
+              <% end %>
+            </template>
+            <% if form.object.variants.count > 0 %>
+              <%= form.fields_for :variants do |variant| %>
+                <%= render "variant_fields", form: variant %>
+              <% end %>
             <% end %>
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
 
   <div class="mt-5">
     <%= form.button button_text(form.send(:submit_default_value)), class: "btn btn-primary" %>
@@ -128,3 +135,24 @@
     <% end %>
   </div>
 <% end %>
+
+<style>
+    .align-left{
+        text-align: right;
+    }
+    .hide-element{
+        display: none;
+    }
+    .align-middle{
+        vertical-align: middle !important;
+    }
+    td{
+        padding: 10px 20px;
+    }
+    .w-100{
+        width: 100%;
+    }
+    .generate-variant:hover{
+        color: white !important;
+    }
+</style>
