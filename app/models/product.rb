@@ -69,7 +69,7 @@ class Product < ApplicationRecord
     end
     return unless variants.present?
 
-    create_destroy_variants(possible_options(variants))
+    create_destroy_variants(self.class.possible_options(variants))
   end
 
   def create_destroy_variants(possible_options)
@@ -84,9 +84,20 @@ class Product < ApplicationRecord
     Variant.where('id NOT IN (?) AND product_id = ?', created_variants, id).destroy_all
   end
 
-  private
+  def self.generate_all_options(options)
+    variants = []
+    options.each do |option|
+      value = option['value']
+      value = value.split(',').map(&:strip) unless value.is_a?(Array)
+      variants << value.map { |each_val| "#{option['name']}#{OPTION_KEY_VAL_SEPARATOR}#{each_val}" }
+    end
+    return [] unless variants.present?
 
-  def possible_options(variants)
+    possible_options(variants).map { |option| option.is_a?(Array) ? option.join(OPTION_SEPARATOR) : option }
+  end
+
+  def self.possible_options(variants)
     variants[1..].inject(variants[0]) { |m, v| m.product(v).map(&:flatten) }
   end
+
 end
